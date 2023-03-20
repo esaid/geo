@@ -21,7 +21,12 @@ class _HomePageState extends State<HomePage> {
       print(position.longitude);
     });
   }
-
+  get_latitude() {
+    return 51.509364 ;
+  }
+  get_longitude() {
+    return  -0.128928 ;
+  }
   Future<Position> _determinePosition() async {
     LocationPermission permission;
     permission = await Geolocator.checkPermission();
@@ -36,12 +41,13 @@ class _HomePageState extends State<HomePage> {
 
   double currentZoom = 13.0;
   MapController mapController = MapController();
-  latLng.LatLng currentCenter = latLng.LatLng(51.509364, -0.128928);
+  latLng.LatLng currentCenter = latLng.LatLng(51.5, -0.12);
 
-  void _zoom() {
+   void _zoom() {
     currentZoom = currentZoom - 1;
     mapController.move(currentCenter, currentZoom);
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -70,9 +76,11 @@ class _HomePageState extends State<HomePage> {
                   child: Stack(
                     children : <Widget>[
                       Container(
-                          child: _mapView(),
+                          child: _map(),
+
                       ),
                       Container(
+                        child:  _mapView(),
 
                       ),
                     ],
@@ -89,6 +97,18 @@ class _HomePageState extends State<HomePage> {
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
+    );
+  }
+
+  Widget _map(){
+    double currentZoom = 13.0;
+    MapController mapController = MapController();
+
+    return Stack(children: <Widget>[ FlutterMap(
+      mapController : mapController,
+      options: MapOptions(center: latLng.LatLng(get_latitude(), get_longitude()), zoom: currentZoom),
+    ),
+    ],
     );
   }
 
@@ -125,7 +145,7 @@ class _HomePageState extends State<HomePage> {
           Marker(
             width: 45.0,
             height: 45.0,
-            point: latLng.LatLng(51.509364, -0.128928),
+            point: latLng.LatLng(get_latitude(), get_longitude()),
             builder: (context) => Container(
               child: IconButton(
                 icon: const Icon(Icons.man_2),
