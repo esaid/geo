@@ -35,9 +35,11 @@ class _HomePageState extends State<HomePage> {
     Position position = await _determinePosition();
 
     setState(() {
+
       pos_latitutde = position.latitude;
       pos_longitude = position.longitude;
-      Deplacement += 0.01;
+      currentCenter = latLng.LatLng(pos_latitutde, pos_longitude);
+      Deplacement += 0.005;
       print("Position $position");
       print('Bonhome latitude: ${get_latitude()}');
       print('Bonhome Longitude: ${get_longitude()}');
@@ -58,6 +60,7 @@ class _HomePageState extends State<HomePage> {
 
   void _zoom_init() {
     currentZoom = 13.0;
+    Deplacement = 0.0;
     mapController.move(currentCenter, currentZoom);
   }
 
