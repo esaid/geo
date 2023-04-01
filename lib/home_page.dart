@@ -169,8 +169,7 @@ class _HomePageState extends State<HomePage> {
         ),
         MarkerLayer(markers: [
           Marker(
-            width: 45.0,
-            height: 45.0,
+
             point: latLng.LatLng(get_latitude(), get_longitude()),
             builder: (context) => Container(
               child: Icon(Icons.man, color: Colors.redAccent, size: 50.0,)
