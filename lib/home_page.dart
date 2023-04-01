@@ -20,11 +20,11 @@ class _HomePageState extends State<HomePage> {
   double pos_longitude = 0.0;
 
   get_latitude() {
-    return pos_latitutde;
+    return pos_latitutde ;
   }
 
   get_longitude() {
-    return pos_longitude + Deplacement;
+    return pos_longitude ;
   }
 
   void initState() {
@@ -106,25 +106,28 @@ class _HomePageState extends State<HomePage> {
               Align(
                 alignment: Alignment.bottomRight,
                 child: FloatingActionButton(
+                  backgroundColor: Colors.green,
                   onPressed: _getCurrentLocation,
                   tooltip: 'Move  Man',
-                  child: const Icon(Icons.man),
+                  child: const Icon(Icons.man,  color: Colors.amber,),
                 ),
               ),
               Align(
                 alignment: Alignment.bottomLeft,
                 child: FloatingActionButton(
+                  backgroundColor: Colors.green,
                   onPressed: _zoom,
                   tooltip: 'Zoom In',
-                  child: const Icon(Icons.add),
+                  child: const Icon(Icons.add, color: Colors.amber,),
                 ),
               ),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: FloatingActionButton(
+                  backgroundColor: Colors.green,
                   onPressed: _zoom_init,
                   tooltip: 'Zoom Update',
-                  child: const Icon(Icons.update),
+                  child: const Icon(Icons.update, color: Colors.amber,),
                 ),
               ),
             ],
