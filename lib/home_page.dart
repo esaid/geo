@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   double currentZoom = 13.0;
   MapController mapController = MapController();
-  latLng.LatLng currentCenter = latLng.LatLng(37.42, -122.08);
+  latLng.LatLng currentCenter = latLng.LatLng(0.0, 0.0);
   Position? position;
   double Deplacement = 0.0;
   double pos_latitutde = 0.0;
