@@ -19,6 +19,9 @@ class _HomePageState extends State<HomePage> {
   double pos_latitutde = 0.0;
   double pos_longitude = 0.0;
 
+  update_map() {
+    currentCenter = latLng.LatLng(get_latitude(), get_longitude());
+  }
   get_latitude() {
     return pos_latitutde ;
   }
@@ -37,6 +40,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       pos_latitutde = position.latitude;
       pos_longitude = position.longitude;
+      update_map();
       Deplacement += 0.01;
       print("Position $position");
       print('Bonhome latitude: ${get_latitude()}');
@@ -74,30 +78,37 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           title: Text("Ou es - tu ?"),
         ),
-        body: Center(
-          child: Column(
-            children: [
-              _location(),
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5.0),
-                      border: Border.all(color: Colors.black54, width: 2.0)),
-                  child: SizedBox(
-                    width: 350,
-                    height: 400,
-                    child: Stack(
-                      children: <Widget>[
-                        Container(
-                          child: _mapView(),
-                        ),
-                      ],
+        body: Container(
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.purple, width: 2.0),
+          ),
+          child: Center(
+
+            child: Column(
+
+              children: [
+                _location(),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5.0),
+                        border: Border.all(color: Colors.black54, width: 2.0)),
+                    child: SizedBox(
+                      width: 350,
+                      height: 400,
+                      child: Stack(
+                        children: <Widget>[
+                          Container(
+                            child: _mapView(),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         floatingActionButton: Container(
@@ -167,15 +178,19 @@ class _HomePageState extends State<HomePage> {
           subdomains: const ['a', 'b', 'c'],
           userAgentPackageName: 'com.example.app',
         ),
-        MarkerLayer(markers: [
-          Marker(
 
-            point: latLng.LatLng(get_latitude(), get_longitude()),
-            builder: (context) => Container(
-              child: Icon(Icons.man, color: Colors.redAccent, size: 50.0,)
+        Align(
+          alignment: Alignment.center,
+          child: MarkerLayer(markers: [
+            Marker(
+
+              point: latLng.LatLng(get_latitude(), get_longitude()),
+              builder: (context) => Container(
+                child: Icon(Icons.man, color: Colors.redAccent, size: 50.0,)
+              ),
             ),
-          ),
-        ])
+          ]),
+        )
       ],
     );
   }
