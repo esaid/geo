@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart' as latLng;
+import 'package:smart_timer/smart_timer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -22,12 +23,13 @@ class _HomePageState extends State<HomePage> {
   update_map() {
     currentCenter = latLng.LatLng(get_latitude(), get_longitude());
   }
+
   get_latitude() {
-    return pos_latitutde ;
+    return pos_latitutde;
   }
 
   get_longitude() {
-    return pos_longitude ;
+    return pos_longitude;
   }
 
   void initState() {
@@ -42,8 +44,20 @@ class _HomePageState extends State<HomePage> {
       }
       return await Geolocator.getCurrentPosition();
     }
+
+    SmartTimer(
+      duration: Duration(seconds: 3),
+      onTick: () => {
+        print("Update position"),
+        print("position"),
+        _getCurrentLocation,
+        _location,
+
+      },
+    );
     // TODO: implement initState
   }
+
   @override
   void _getCurrentLocation() async {
     Position position = await _determinePosition();
@@ -60,7 +74,6 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<Position> _determinePosition() async {
-
     return await Geolocator.getCurrentPosition();
   }
 
@@ -87,9 +100,7 @@ class _HomePageState extends State<HomePage> {
             border: Border.all(color: Colors.purple, width: 2.0),
           ),
           child: Center(
-
             child: Column(
-
               children: [
                 _location(),
                 Padding(
@@ -124,7 +135,10 @@ class _HomePageState extends State<HomePage> {
                   backgroundColor: Colors.green,
                   onPressed: _getCurrentLocation,
                   tooltip: 'Move  Man',
-                  child: const Icon(Icons.man,  color: Colors.amber,),
+                  child: const Icon(
+                    Icons.man,
+                    color: Colors.amber,
+                  ),
                 ),
               ),
               Align(
@@ -133,7 +147,10 @@ class _HomePageState extends State<HomePage> {
                   backgroundColor: Colors.green,
                   onPressed: _zoom,
                   tooltip: 'Zoom In',
-                  child: const Icon(Icons.add, color: Colors.amber,),
+                  child: const Icon(
+                    Icons.add,
+                    color: Colors.amber,
+                  ),
                 ),
               ),
               Align(
@@ -142,7 +159,10 @@ class _HomePageState extends State<HomePage> {
                   backgroundColor: Colors.green,
                   onPressed: _zoom_init,
                   tooltip: 'Zoom Update',
-                  child: const Icon(Icons.update, color: Colors.amber,),
+                  child: const Icon(
+                    Icons.update,
+                    color: Colors.amber,
+                  ),
                 ),
               ),
             ],
@@ -182,16 +202,17 @@ class _HomePageState extends State<HomePage> {
           subdomains: const ['a', 'b', 'c'],
           userAgentPackageName: 'com.example.app',
         ),
-
         Align(
           alignment: Alignment.center,
           child: MarkerLayer(markers: [
             Marker(
-
               point: latLng.LatLng(get_latitude(), get_longitude()),
               builder: (context) => Container(
-                child: Icon(Icons.man, color: Colors.redAccent, size: 50.0,)
-              ),
+                  child: Icon(
+                Icons.man,
+                color: Colors.redAccent,
+                size: 50.0,
+              )),
             ),
           ]),
         )

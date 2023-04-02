@@ -269,6 +269,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  smart_timer:
+    dependency: "direct main"
+    description:
+      name: smart_timer
+      sha256: cc88a5ab871642aec783ffdfcb959eb16d65f16e989f24894142bad098b72ea5
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
   source_span:
     dependency: transitive
     description:
