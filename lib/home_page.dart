@@ -31,6 +31,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   void initState() {
+    Future<Position> _determinePosition() async {
+      LocationPermission permission;
+      permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          return Future.error('Location Permissions are denied');
+        }
+      }
+      return await Geolocator.getCurrentPosition();
+    }
     // TODO: implement initState
   }
   @override
@@ -49,14 +60,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<Position> _determinePosition() async {
-    LocationPermission permission;
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error('Location Permissions are denied');
-      }
-    }
+
     return await Geolocator.getCurrentPosition();
   }
 
