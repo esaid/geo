@@ -4,6 +4,8 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart' as latLng;
 import 'package:smart_timer/smart_timer.dart';
 
+
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -33,6 +35,20 @@ class _HomePageState extends State<HomePage> {
   }
 
   void initState() {
+
+
+    SmartTimer(
+      duration: Duration(seconds: 3),
+      onTick: () => {
+        print("Update position"),
+      },
+    );
+    // TODO: implement initState
+  }
+
+
+  @override
+  void _getCurrentLocation() async {
     Future<Position> _determinePosition() async {
       LocationPermission permission;
       permission = await Geolocator.checkPermission();
@@ -42,24 +58,8 @@ class _HomePageState extends State<HomePage> {
           return Future.error('Location Permissions are denied');
         }
       }
-      return await Geolocator.getCurrentPosition();
+      return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
     }
-
-    SmartTimer(
-      duration: Duration(seconds: 3),
-      onTick: () => {
-        print("Update position"),
-        print("position"),
-        _getCurrentLocation,
-        _location,
-
-      },
-    );
-    // TODO: implement initState
-  }
-
-  @override
-  void _getCurrentLocation() async {
     Position position = await _determinePosition();
 
     setState(() {
@@ -73,9 +73,6 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  Future<Position> _determinePosition() async {
-    return await Geolocator.getCurrentPosition();
-  }
 
   void _zoom_init() {
     currentZoom = 13.0;
