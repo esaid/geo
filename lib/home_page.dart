@@ -23,6 +23,7 @@ class _HomePageState extends State<HomePage> {
   double pos_longitude = 0.0;
 
   update_map() {
+    print("Update position map");
     currentCenter = latLng.LatLng(get_latitude(), get_longitude());
   }
 
@@ -40,6 +41,10 @@ class _HomePageState extends State<HomePage> {
     SmartTimer(
       duration: Duration(seconds: 3),
       onTick: () => {
+        _getCurrentLocation(),
+        update_map(),
+        _zoom(),
+
         print("Update position"),
       },
     );
@@ -206,10 +211,10 @@ class _HomePageState extends State<HomePage> {
               point: latLng.LatLng(get_latitude(), get_longitude()),
               builder: (context) => Container(
                   child: Icon(
-                Icons.man,
-                color: Colors.redAccent,
-                size: 50.0,
-              )),
+                    Icons.man,
+                    color: Colors.redAccent,
+                    size: 50.0,
+                  )),
             ),
           ]),
         )
