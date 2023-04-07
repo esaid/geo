@@ -3,6 +3,10 @@ import 'package:geolocator/geolocator.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart' as latLng;
 import 'package:smart_timer/smart_timer.dart';
+import 'package:deta/deta.dart';
+import 'package:http_client_deta_api/http_client_deta_api.dart';
+import 'package:dio_client_deta_api/dio_client_deta_api.dart';
+import 'package:dio/dio.dart';
 
 
 
@@ -26,7 +30,9 @@ class _HomePageState extends State<HomePage> {
     print("Update position map");
     currentCenter = latLng.LatLng(get_latitude(), get_longitude());
   }
-
+  get_position(){
+    return currentCenter;
+  }
   get_latitude() {
     return pos_latitutde;
   }
@@ -35,17 +41,41 @@ class _HomePageState extends State<HomePage> {
     return pos_longitude;
   }
 
+  detaBase(String position) async{
+    const apiKey = "a0mrzauhmfc_XyTqsXwfqNjkM5yfCHuKtse6k6HSZtp";  // Your API Key here. Remember, TOP SECRET!
+    String baseName = "data_position";                                // Name of the base (database)
+
+    final deta = Deta(projectKey: apiKey, client: DioClientDetaApi(dio: Dio()));
+    final detabase = deta.base(baseName);
+    final all = await detabase.fetch();
+    final pos = await detabase.get('john');
+    await detabase.update(key: 'john',  item: <String, dynamic>{
+      'key' : 'john',
+      'position' : position,
+    },
+    );
+    print(all);
+    print(pos['position']);
+
+
+
+
+  }
+
+
   void initState() {
 
 
     SmartTimer(
-      duration: Duration(seconds: 3),
+      duration: Duration(seconds: 5),
       onTick: () => {
         _getCurrentLocation(),
         update_map(),
         _zoom(),
+        print('update position : '),
+        print(get_position()),
+        detaBase(get_position().toString()),
 
-        print("Update position"),
       },
     );
     // TODO: implement initState

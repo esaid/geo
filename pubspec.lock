@@ -25,6 +25,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.1"
+  client_deta_api:
+    dependency: transitive
+    description:
+      name: client_deta_api
+      sha256: "97d3be47e8a3a870c01da084b81ea74641999d87619bc24bfca849d2b9cea3a3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2"
   clock:
     dependency: transitive
     description:
@@ -49,6 +57,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  deta:
+    dependency: "direct main"
+    description:
+      name: deta
+      sha256: ca241c9c336f0cbfd5b41a8a73c51d63959829b2ca0da32d6f89b27456a1ca62
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.3+1"
+  dio:
+    dependency: "direct main"
+    description:
+      name: dio
+      sha256: "7d328c4d898a61efc3cd93655a0955858e29a0aa647f0f9e02d59b3bb275e2e8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.6"
+  dio_client_deta_api:
+    dependency: "direct main"
+    description:
+      name: dio_client_deta_api
+      sha256: fb900f1aa92c901f72f36a52d620f042ed9cfd731dfc351e2dea6a70fe73d852
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   fake_async:
     dependency: transitive
     description:
@@ -144,6 +176,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.13.5"
+  http_client_deta_api:
+    dependency: "direct main"
+    description:
+      name: http_client_deta_api
+      sha256: f67963dd6fc001f9cf875e326137a41a43f3e3e5a167d7ea48669e4d10a0bf71
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1+1"
   http_parser:
     dependency: transitive
     description:
