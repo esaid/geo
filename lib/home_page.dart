@@ -4,7 +4,6 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart' as latLng;
 import 'package:smart_timer/smart_timer.dart';
 import 'package:deta/deta.dart';
-import 'package:http_client_deta_api/http_client_deta_api.dart';
 import 'package:dio_client_deta_api/dio_client_deta_api.dart';
 import 'package:dio/dio.dart';
 
