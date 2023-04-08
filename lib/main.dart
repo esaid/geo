@@ -3,8 +3,13 @@
 // https://medium.com/unitechie/flutter-tutorial-geolocation-1d07808f1bb9
 import 'package:flutter/material.dart';
 import 'home_page.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+Future main() async{
+  await dotenv.load(fileName: "assets/.env");
+  String apiKey = dotenv.get('apiKey');
+  //print(apiKey);
+
   runApp(MyApp());
 }
 
