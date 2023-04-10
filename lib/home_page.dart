@@ -8,9 +8,6 @@ import 'package:deta/deta.dart';
 import 'package:dio_client_deta_api/dio_client_deta_api.dart';
 import 'package:dio/dio.dart';
 
-
-
-
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
   @override
@@ -30,9 +27,11 @@ class _HomePageState extends State<HomePage> {
     print("Update position map");
     currentCenter = latLng.LatLng(get_latitude(), get_longitude());
   }
-  get_position(){
+
+  get_position() {
     return currentCenter;
   }
+
   get_latitude() {
     return pos_latitutde;
   }
@@ -41,33 +40,28 @@ class _HomePageState extends State<HomePage> {
     return pos_longitude;
   }
 
-  detaBase(String position) async{
-    print(Environment.apiKey);
-    const apiKey = "a0mrzauhmfc_XyTqsXwfqNjkM5yfCHuKtse6k6HSZtp";  // Your API Key here. Remember, TOP SECRET!
-    String baseName = "data_position";                                // Name of the base (database)
-
-    final deta = Deta(projectKey: apiKey, client: DioClientDetaApi(dio: Dio()));
+  detaBase(String position) async {
+    // print('apikey => ' + Environment.apiKey);
+    // const apiKey = "a0mrzauhmfc_XyTqsXwfqNjkM5yfCHuKtse6k6HSZtp";  // Your API Key here. Remember, TOP SECRET!
+    String baseName = "data_position"; // Name of the base (detabase)
+    final deta = Deta(
+        projectKey: Environment.apiKey, client: DioClientDetaApi(dio: Dio()));
     final detabase = deta.base(baseName);
     final all = await detabase.fetch();
     final pos = await detabase.get('john');
-    await detabase.update(key: 'john',  item: <String, dynamic>{
-      'key' : 'john',
-      'position' : position,
-    },
+    await detabase.update(
+      key: 'john',
+      item: <String, dynamic>{
+        'key': 'john',
+        'position': position,
+      },
     );
 
     print(all);
     print(pos['position']);
-
-
-
-
   }
 
-
   void initState() {
-
-
     SmartTimer(
       duration: Duration(seconds: 5),
       onTick: () => {
@@ -77,12 +71,10 @@ class _HomePageState extends State<HomePage> {
         print('update position : '),
         print(get_position()),
         detaBase(get_position().toString()),
-
       },
     );
     // TODO: implement initState
   }
-
 
   @override
   void _getCurrentLocation() async {
@@ -95,8 +87,10 @@ class _HomePageState extends State<HomePage> {
           return Future.error('Location Permissions are denied');
         }
       }
-      return await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+      return await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
     }
+
     Position position = await _determinePosition();
 
     setState(() {
@@ -109,7 +103,6 @@ class _HomePageState extends State<HomePage> {
       print('Bonhome Longitude: ${get_longitude()}');
     });
   }
-
 
   void _zoom_init() {
     currentZoom = 13.0;
@@ -243,10 +236,10 @@ class _HomePageState extends State<HomePage> {
               point: latLng.LatLng(get_latitude(), get_longitude()),
               builder: (context) => Container(
                   child: Icon(
-                    Icons.man,
-                    color: Colors.redAccent,
-                    size: 50.0,
-                  )),
+                Icons.man,
+                color: Colors.redAccent,
+                size: 50.0,
+              )),
             ),
           ]),
         )

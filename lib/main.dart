@@ -14,13 +14,11 @@ abstract class Environment {
 
 Future<void> main() async {
   await dotenv.load(fileName: "assets/.env");
-  print('apikey = ',Environment.apiKey);
+  //print('apiKey = ' + Environment.apiKey);
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
