@@ -3,8 +3,8 @@ import 'package:geo/main.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart' as latLng;
-import 'package:smart_timer/smart_timer.dart';
-import 'package:deta/deta.dart';
+import 'package:smart_timer/smart_timer.dart'; // to refresh position by timer
+import 'package:deta/deta.dart'; // database https://deta.space/collections
 import 'package:dio_client_deta_api/dio_client_deta_api.dart';
 import 'package:dio/dio.dart';
 
@@ -19,7 +19,7 @@ class _HomePageState extends State<HomePage> {
   MapController mapController = MapController();
   latLng.LatLng currentCenter = latLng.LatLng(0.0, 0.0);
   Position? position;
-  double Deplacement = 0.0;
+  double zoomIn_step = 0.2;
   double pos_latitutde = 0.0;
   double pos_longitude = 0.0;
 
@@ -40,15 +40,18 @@ class _HomePageState extends State<HomePage> {
     return pos_longitude;
   }
 
+// gestion database https://deta.space/collections
   detaBase(String position) async {
     // print('apikey => ' + Environment.apiKey);
-    // const apiKey = "a0mrzauhmfc_XyTqsXwfqNjkM5yfCHuKtse6k6HSZtp";  // Your API Key here. Remember, TOP SECRET!
-    String baseName = "data_position"; // Name of the base (detabase)
+    // My API Key in Environment.apiKey , TOP SECRET...
+    String baseName =
+        "data_position"; // Name of the base (Base: data_position )
     final deta = Deta(
         projectKey: Environment.apiKey, client: DioClientDetaApi(dio: Dio()));
     final detabase = deta.base(baseName);
-    final all = await detabase.fetch();
-    final pos = await detabase.get('john');
+    // final all = await detabase.fetch(); // get all
+    final pos = await detabase.get('john'); // get datas  by Key ='john'
+    // update position in database
     await detabase.update(
       key: 'john',
       item: <String, dynamic>{
@@ -56,12 +59,12 @@ class _HomePageState extends State<HomePage> {
         'position': position,
       },
     );
-
-    print(all);
+    // print(all);
     print(pos['position']);
   }
 
   void initState() {
+    // update by timer
     SmartTimer(
       duration: Duration(seconds: 5),
       onTick: () => {
@@ -73,11 +76,11 @@ class _HomePageState extends State<HomePage> {
         detaBase(get_position().toString()),
       },
     );
-    // TODO: implement initState
   }
 
   @override
   void _getCurrentLocation() async {
+    // position GPS
     Future<Position> _determinePosition() async {
       LocationPermission permission;
       permission = await Geolocator.checkPermission();
@@ -97,10 +100,10 @@ class _HomePageState extends State<HomePage> {
       pos_latitutde = position.latitude;
       pos_longitude = position.longitude;
       update_map();
-      Deplacement += 0.01;
+      // Deplacement += 0.01;
       print("Position $position");
-      print('Bonhome latitude: ${get_latitude()}');
-      print('Bonhome Longitude: ${get_longitude()}');
+      // print('Bonhome latitude: ${get_latitude()}');
+      // print('Bonhome Longitude: ${get_longitude()}');
     });
   }
 
@@ -112,7 +115,7 @@ class _HomePageState extends State<HomePage> {
   void _zoom() {
     print(currentZoom);
     print(currentCenter);
-    currentZoom = currentZoom + 0.2;
+    currentZoom = currentZoom + zoomIn_step;
     mapController.move(currentCenter, currentZoom);
   }
 
@@ -203,7 +206,6 @@ class _HomePageState extends State<HomePage> {
         alignment: Alignment.topLeft,
         child: Text(
           'Location: Lat: $pos_latitutde Long: $pos_longitude',
-          // ignore: prefer_const_constructors
           style: TextStyle(
             color: Colors.black54,
           ),

@@ -5,15 +5,13 @@ import 'package:flutter/material.dart';
 import 'home_page.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-
+// to store apiKey in Environment.apiKey
 abstract class Environment {
   static String get apiKey => dotenv.env['apiKey'] ?? '';
-
 }
 
-
 Future<void> main() async {
-  await dotenv.load(fileName: "assets/.env");
+  await dotenv.load(fileName: "assets/.env"); // My API key in .env file
   //print('apiKey = ' + Environment.apiKey);
   runApp(MyApp());
 }
