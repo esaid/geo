@@ -56,7 +56,8 @@ class _HomePageState extends State<HomePage> {
       key: 'john',
       item: <String, dynamic>{
         'key': 'john',
-        'position': position,
+        'position': pos_latitutde.toString() + ' ' + pos_longitude.toString(),
+
       },
     );
     // print(all);
@@ -102,8 +103,8 @@ class _HomePageState extends State<HomePage> {
       update_map();
       // Deplacement += 0.01;
       print("Position $position");
-      // print('Bonhome latitude: ${get_latitude()}');
-      // print('Bonhome Longitude: ${get_longitude()}');
+      print('Bonhome latitude: ${get_latitude()}');
+      print('Bonhome Longitude: ${get_longitude()}');
     });
   }
 
