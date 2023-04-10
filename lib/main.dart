@@ -5,15 +5,22 @@ import 'package:flutter/material.dart';
 import 'home_page.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-Future main() async{
-  await dotenv.load(fileName: "assets/.env");
-  String apiKey = dotenv.get('apiKey');
-  //print(apiKey);
 
+abstract class Environment {
+  static String get apiKey => dotenv.env['apiKey'] ?? '';
+
+}
+
+
+Future<void> main() async {
+  await dotenv.load(fileName: "assets/.env");
+  print('apikey = ',Environment.apiKey);
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -22,6 +29,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+
       home: HomePage(),
     );
   }

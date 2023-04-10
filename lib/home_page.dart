@@ -10,9 +10,9 @@ import 'package:dio/dio.dart';
 
 
 
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
-
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -25,8 +25,6 @@ class _HomePageState extends State<HomePage> {
   double Deplacement = 0.0;
   double pos_latitutde = 0.0;
   double pos_longitude = 0.0;
-
-
 
   update_map() {
     print("Update position map");
@@ -44,6 +42,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   detaBase(String position) async{
+    print(Environment.apiKey);
     const apiKey = "a0mrzauhmfc_XyTqsXwfqNjkM5yfCHuKtse6k6HSZtp";  // Your API Key here. Remember, TOP SECRET!
     String baseName = "data_position";                                // Name of the base (database)
 
@@ -56,6 +55,7 @@ class _HomePageState extends State<HomePage> {
       'position' : position,
     },
     );
+
     print(all);
     print(pos['position']);
 
