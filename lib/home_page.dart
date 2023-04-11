@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
   MapController mapController = MapController();
   latLng.LatLng currentCenter = latLng.LatLng(0.0, 0.0);
   Position? position;
-  double zoomIn_step = 0.20;
+  final double  zoomIn_step = 0.20;
   double pos_latitutde = 0.0;
   double pos_longitude = 0.0;
 
@@ -118,7 +118,9 @@ class _HomePageState extends State<HomePage> {
 
   void _zoom() {
     print('current  Zoom :  $currentZoom');
-    (currentZoom >= 18) ? currentZoom = 18 : currentZoom = currentZoom + zoomIn_step;
+    (currentZoom >= 18)
+        ? currentZoom = 18
+        : currentZoom = currentZoom + zoomIn_step;
 
     mapController.move(currentCenter, currentZoom);
   }
