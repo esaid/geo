@@ -77,7 +77,6 @@ class _HomePageState extends State<HomePage> {
         // print('update position : '),
         // print(get_position()),
         detaBase(get_position().toString()), // use only update detabase
-
       },
     );
   }
@@ -119,7 +118,8 @@ class _HomePageState extends State<HomePage> {
 
   void _zoom() {
     print('current  Zoom :  $currentZoom');
-    currentZoom = currentZoom + zoomIn_step;
+    (currentZoom > 18) ? currentZoom = 18 : currentZoom = currentZoom + zoomIn_step;
+
     mapController.move(currentCenter, currentZoom);
   }
 
@@ -127,7 +127,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Ou es - tu ?", style: TextStyle(fontSize: 25.0 ),),
+          title: Text(
+            "Ou es - tu ?",
+            style: TextStyle(fontSize: 25.0),
+          ),
         ),
         body: Container(
           decoration: BoxDecoration(
