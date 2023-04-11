@@ -66,11 +66,15 @@ class _HomePageState extends State<HomePage> {
     print(pos['position']);
   }
 
+  void log_terminal () {
+    print('Timer');
+  }
   void initState() {
     // update by timer
     SmartTimer(
       duration: Duration(seconds: 5),
       onTick: () => {
+        log_terminal(),
         _getCurrentLocation(),
         update_map(),
         _zoom(),
@@ -103,6 +107,7 @@ class _HomePageState extends State<HomePage> {
       selected = !selected;
       pos_latitutde = position.latitude;
       pos_longitude = position.longitude;
+      print('setState');
       update_map();
       // Deplacement += 0.01;
       // print("Position $position");
