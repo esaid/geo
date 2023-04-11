@@ -10,6 +10,7 @@ abstract class Environment {
   static String get apiKey => dotenv.env['apiKey'] ?? '';
 }
 
+
 Future<void> main() async {
   await dotenv.load(fileName: "assets/.env"); // My API key in .env file
   //print('apiKey = ' + Environment.apiKey);
@@ -25,7 +26,6 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-
       home: HomePage(),
     );
   }

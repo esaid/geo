@@ -15,29 +15,31 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool selected = false;
   double currentZoom = 13.0;
   MapController mapController = MapController();
   latLng.LatLng currentCenter = latLng.LatLng(0.0, 0.0);
   Position? position;
-  double zoomIn_step = 0.2;
+  double zoomIn_step = 0.20;
   double pos_latitutde = 0.0;
   double pos_longitude = 0.0;
 
   update_map() {
-    print("Update position map");
+    // print("Update position map");
     currentCenter = latLng.LatLng(get_latitude(), get_longitude());
   }
 
   get_position() {
     return currentCenter;
+    // LatLng(latitude:37.421998, longitude:-122.084)
   }
 
   get_latitude() {
-    return pos_latitutde;
+    return pos_latitutde; // plus precis 37.421998333333335
   }
 
   get_longitude() {
-    return pos_longitude;
+    return pos_longitude; // plus precis -122.084
   }
 
 // gestion database https://deta.space/collections
@@ -56,8 +58,8 @@ class _HomePageState extends State<HomePage> {
       key: 'john',
       item: <String, dynamic>{
         'key': 'john',
+        // pos_latitude , pos_longitude update
         'position': pos_latitutde.toString() + ' ' + pos_longitude.toString(),
-
       },
     );
     // print(all);
@@ -72,9 +74,10 @@ class _HomePageState extends State<HomePage> {
         _getCurrentLocation(),
         update_map(),
         _zoom(),
-        print('update position : '),
-        print(get_position()),
-        detaBase(get_position().toString()),
+        // print('update position : '),
+        // print(get_position()),
+        detaBase(get_position().toString()), // use only update detabase
+
       },
     );
   }
@@ -98,13 +101,14 @@ class _HomePageState extends State<HomePage> {
     Position position = await _determinePosition();
 
     setState(() {
+      selected = !selected;
       pos_latitutde = position.latitude;
       pos_longitude = position.longitude;
       update_map();
       // Deplacement += 0.01;
-      print("Position $position");
-      print('Bonhome latitude: ${get_latitude()}');
-      print('Bonhome Longitude: ${get_longitude()}');
+      // print("Position $position");
+      // print('Bonhome latitude: ${get_latitude()}');
+      // print('Bonhome Longitude: ${get_longitude()}');
     });
   }
 
@@ -114,8 +118,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _zoom() {
-    print(currentZoom);
-    print(currentCenter);
+    print('current  Zoom :  $currentZoom');
     currentZoom = currentZoom + zoomIn_step;
     mapController.move(currentCenter, currentZoom);
   }
@@ -124,7 +127,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Ou es - tu ?"),
+          title: Text("Ou es - tu ?", style: TextStyle(fontSize: 25.0 ),),
         ),
         body: Container(
           decoration: BoxDecoration(
@@ -208,7 +211,7 @@ class _HomePageState extends State<HomePage> {
         child: Text(
           'Location: Lat: $pos_latitutde Long: $pos_longitude',
           style: TextStyle(
-            color: Colors.black54,
+            color: selected ? Colors.black54 : Colors.blue,
           ),
         ));
   }
