@@ -118,7 +118,7 @@ class _HomePageState extends State<HomePage> {
 
   void _zoom() {
     print('current  Zoom :  $currentZoom');
-    (currentZoom > 18) ? currentZoom = 18 : currentZoom = currentZoom + zoomIn_step;
+    (currentZoom >= 18) ? currentZoom = 18 : currentZoom = currentZoom + zoomIn_step;
 
     mapController.move(currentCenter, currentZoom);
   }
