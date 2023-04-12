@@ -14,17 +14,22 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
+
+void log_terminal() {
+  print('Timer update position, map');
+}
+
 class _HomePageState extends State<HomePage> {
   bool selected = false;
   double currentZoom = 13.0;
   MapController mapController = MapController();
   latLng.LatLng currentCenter = latLng.LatLng(0.0, 0.0);
   Position? position;
-  final double  zoomIn_step = 0.20;
+  final double zoomIn_step = 0.20;
   double pos_latitutde = 0.0;
   double pos_longitude = 0.0;
 
-  update_map() {
+  update_map_position() {
     // print("Update position map");
     currentCenter = latLng.LatLng(get_latitude(), get_longitude());
   }
@@ -33,17 +38,18 @@ class _HomePageState extends State<HomePage> {
     return currentCenter;
     // LatLng(latitude:37.421998, longitude:-122.084)
   }
-
+// le cinquième chiffre après la virgule fournit une précision de l'ordre de un mètre : 1,08 m exactement
   get_latitude() {
     return pos_latitutde; // plus precis 37.421998333333335
   }
 
+  // le cinquième chiffre après la virgule fournit une précision de l'ordre de un mètre : 1,08 m exactement
   get_longitude() {
     return pos_longitude; // plus precis -122.084
   }
 
 // gestion database https://deta.space/collections
-  detaBase(String position) async {
+  detaBase(String position, String keyDetabase) async {
     // print('apikey => ' + Environment.apiKey);
     // My API Key in Environment.apiKey , TOP SECRET...
     String baseName =
@@ -52,35 +58,28 @@ class _HomePageState extends State<HomePage> {
         projectKey: Environment.apiKey, client: DioClientDetaApi(dio: Dio()));
     final detabase = deta.base(baseName);
     // final all = await detabase.fetch(); // get all
-    final pos = await detabase.get('john'); // get datas  by Key ='john'
+    final pos = await detabase.get(keyDetabase); // get datas  by Key = keyDetabase
     // update position in database
     await detabase.update(
-      key: 'john',
+      key: keyDetabase,
       item: <String, dynamic>{
-        'key': 'john',
+        'key': keyDetabase,
         // pos_latitude , pos_longitude update
         'position': pos_latitutde.toString() + ' ' + pos_longitude.toString(),
       },
     );
     // print(all);
-    print(pos['position']);
+    // print(pos['position']);
   }
 
-  void log_terminal () {
-    print('Timer');
-  }
+
   void initState() {
     // update by timer
     SmartTimer(
-      duration: Duration(seconds: 5),
+      duration: Duration(seconds: 10), // update  10 seconds
       onTick: () => {
         log_terminal(),
         _getCurrentLocation(),
-        update_map(),
-        _zoom(),
-        // print('update position : '),
-        // print(get_position()),
-        detaBase(get_position().toString()), // use only update detabase
       },
     );
   }
@@ -102,17 +101,18 @@ class _HomePageState extends State<HomePage> {
     }
 
     Position position = await _determinePosition();
-
     setState(() {
-      selected = !selected;
+      selected = !selected; // to change Colors black , blue
       pos_latitutde = position.latitude;
       pos_longitude = position.longitude;
-      print('setState');
-      update_map();
-      // Deplacement += 0.01;
-      // print("Position $position");
-      // print('Bonhome latitude: ${get_latitude()}');
-      // print('Bonhome Longitude: ${get_longitude()}');
+
+      update_map_position();
+      _zoom();
+      detaBase(get_position().toString(), 'john'); // use only update detabase
+
+      print("Position $position");
+      // print('Man latitude: ${get_latitude()}');
+      // print('Man Longitude: ${get_longitude()}');
     });
   }
 
