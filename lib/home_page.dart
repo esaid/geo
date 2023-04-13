@@ -61,21 +61,26 @@ class _HomePageState extends State<HomePage> {
         projectKey: Environment.apiKey, client: DioClientDetaApi(dio: Dio()));
     final detabase = deta.base(baseName);
     // final all = await detabase.fetch(); // get all
-    final pos =
-        await detabase.get(keyDetabase); // get datas  by Key = keyDetabase
-    // update position in database
-    await detabase.update(
-      key: keyDetabase,
-      item: <String, dynamic>{
-        'key': keyDetabase,
-        // pos_latitude , pos_longitude update
-        'position': position,
-      },
-    );
-    // print(all);
-    // print(pos['position']);  //  {Lat: 37.421998333333335, long: -122.084}
-    // print(pos['position']['Lat']); // 37.421998333333335
-    // print(pos['position']['long']); // -122.084
+    if (manSelected == false) {
+      // update position in database
+      await detabase.update(
+        key: keyDetabase,
+        item: <String, dynamic>{
+          'key': keyDetabase,
+          // pos_latitude , pos_longitude update
+          'position': position,
+        },
+      );
+    } else {
+      final pos =
+          await detabase.get(keyDetabase); // get datas  by Key = keyDetabase
+      set_pos_latitude = pos['position']['Lat'];
+      set_pos_longitude = pos['position']['long'];
+      // print(all);
+      // print(pos['position']);  //  {Lat: 37.421998333333335, long: -122.084}
+      // print(pos['position']['Lat']); // 37.421998333333335
+      // print(pos['position']['long']); // -122.084
+    }
   }
 
   void initState() {
@@ -128,8 +133,8 @@ class _HomePageState extends State<HomePage> {
 
   void _findMan() {
     manSelected = !manSelected;
-    set_pos_latitude = 37.5;
-    set_pos_longitude = -122.0;
+    //set_pos_latitude = 37.5;
+    //set_pos_longitude = -122.0;
     print('Suivre ou es tu $manSelected');
   }
 
