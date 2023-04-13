@@ -19,7 +19,7 @@ void log_terminal() {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool manSelected = false;
+  bool manSelected = false;  // false  position vers detabase, true deatbase vers position
   bool selected = false;
   double currentZoom = 13.0;
   MapController mapController = MapController();
