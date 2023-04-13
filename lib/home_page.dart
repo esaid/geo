@@ -19,6 +19,7 @@ void log_terminal() {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool manSelected = false;
   bool selected = false;
   double currentZoom = 13.0;
   MapController mapController = MapController();
@@ -26,7 +27,9 @@ class _HomePageState extends State<HomePage> {
   Position? position;
   final double zoomIn_step = 0.20;
   double pos_latitutde = 0.0;
+  double set_pos_latitude = 0.0;
   double pos_longitude = 0.0;
+  double set_pos_longitude = 0.0;
 
   update_map_position() {
     // print("Update position map");
@@ -105,18 +108,29 @@ class _HomePageState extends State<HomePage> {
     Position position = await _determinePosition();
     setState(() {
       selected = !selected; // to change Colors black , blue
-      pos_latitutde = position.latitude;
-      pos_longitude = position.longitude;
-
+      if (manSelected == false) {
+        pos_latitutde = position.latitude;
+        pos_longitude = position.longitude;
+      } else {
+        pos_latitutde = set_pos_latitude;
+        pos_longitude = set_pos_longitude;
+      }
       update_map_position();
       _zoom();
       Map<dynamic, double> p = {'Lat': pos_latitutde, 'long': pos_longitude};
       detaBase(p, 'john'); // use only update detabase
 
-      print("Position $position");
+      print('Position   ${get_position()}');
       // print('Man latitude: ${get_latitude()}');
       // print('Man Longitude: ${get_longitude()}');
     });
+  }
+
+  void _findMan() {
+    manSelected = !manSelected;
+    set_pos_latitude = 37.5;
+    set_pos_longitude = -122.0;
+    print('Suivre ou es tu $manSelected');
   }
 
   void _zoom_init() {
@@ -176,6 +190,18 @@ class _HomePageState extends State<HomePage> {
         floatingActionButton: Container(
           child: Stack(
             children: <Widget>[
+              Align(
+                alignment: Alignment.topCenter,
+                child: FloatingActionButton(
+                  backgroundColor: Colors.redAccent,
+                  onPressed: _findMan,
+                  tooltip: 'Ou es tu',
+                  child: const Icon(
+                    Icons.man_3_sharp,
+                    color: Colors.amber,
+                  ),
+                ),
+              ),
               Align(
                 alignment: Alignment.bottomRight,
                 child: FloatingActionButton(
@@ -256,7 +282,7 @@ class _HomePageState extends State<HomePage> {
               builder: (context) => Container(
                   child: Icon(
                 Icons.man,
-                color: Colors.redAccent,
+                color: manSelected ? Colors.redAccent : Colors.blueAccent,
                 size: 50.0,
               )),
             ),
