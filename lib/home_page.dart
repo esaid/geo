@@ -196,7 +196,7 @@ class _HomePageState extends State<HomePage> {
           child: Stack(
             children: <Widget>[
               Align(
-                alignment: Alignment.topCenter,
+                alignment: Alignment.centerLeft,
                 child: FloatingActionButton(
                   backgroundColor: Colors.redAccent,
                   onPressed: _findMan,
