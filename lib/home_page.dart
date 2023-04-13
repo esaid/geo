@@ -14,7 +14,6 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-
 void log_terminal() {
   print('Timer update position, map');
 }
@@ -38,6 +37,7 @@ class _HomePageState extends State<HomePage> {
     return currentCenter;
     // LatLng(latitude:37.421998, longitude:-122.084)
   }
+
 // le cinquième chiffre après la virgule fournit une précision de l'ordre de un mètre : 1,08 m exactement
   get_latitude() {
     return pos_latitutde; // plus precis 37.421998333333335
@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
   }
 
 // gestion database https://deta.space/collections
-  detaBase(String position, String keyDetabase) async {
+  detaBase(position, String keyDetabase) async {
     // print('apikey => ' + Environment.apiKey);
     // My API Key in Environment.apiKey , TOP SECRET...
     String baseName =
@@ -58,20 +58,22 @@ class _HomePageState extends State<HomePage> {
         projectKey: Environment.apiKey, client: DioClientDetaApi(dio: Dio()));
     final detabase = deta.base(baseName);
     // final all = await detabase.fetch(); // get all
-    final pos = await detabase.get(keyDetabase); // get datas  by Key = keyDetabase
+    final pos =
+        await detabase.get(keyDetabase); // get datas  by Key = keyDetabase
     // update position in database
     await detabase.update(
       key: keyDetabase,
       item: <String, dynamic>{
         'key': keyDetabase,
         // pos_latitude , pos_longitude update
-        'position': pos_latitutde.toString() + ' ' + pos_longitude.toString(),
+        'position': position,
       },
     );
     // print(all);
-    // print(pos['position']);
+    // print(pos['position']);  //  {Lat: 37.421998333333335, long: -122.084}
+    // print(pos['position']['Lat']); // 37.421998333333335
+    // print(pos['position']['long']); // -122.084
   }
-
 
   void initState() {
     // update by timer
@@ -108,7 +110,8 @@ class _HomePageState extends State<HomePage> {
 
       update_map_position();
       _zoom();
-      detaBase(get_position().toString(), 'john'); // use only update detabase
+      Map<dynamic, double> p = {'Lat': pos_latitutde, 'long': pos_longitude};
+      detaBase(p, 'john'); // use only update detabase
 
       print("Position $position");
       // print('Man latitude: ${get_latitude()}');
