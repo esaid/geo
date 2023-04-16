@@ -19,7 +19,7 @@ void log_terminal() {
 }
 
 class _HomePageState extends State<HomePage> {
-  int indexIconSelected = 0 ;
+  int indexIconSelected = 0;
   bool manSelected =
       false; // false  position vers detabase, true deatbase vers position
   bool selected = false;
@@ -85,10 +85,12 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  @override
   void initState() {
+    super.initState();
     // update by timer
     SmartTimer(
-      duration: Duration(seconds: 10), // update  10 seconds
+      duration: const Duration(seconds: 10), // update  10 seconds
       onTick: () => {
         log_terminal(),
         _getCurrentLocation(),
@@ -96,7 +98,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  @override
   void _getCurrentLocation() async {
     // position GPS
     Future<Position> _determinePosition() async {
@@ -199,16 +200,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget NavigationBar() {
-
     return BottomNavigationBar(
-
       backgroundColor: Colors.deepPurple,
       selectedFontSize: 18.0,
       unselectedFontSize: 16.0,
       fixedColor: Colors.white,
       unselectedItemColor: Colors.black,
       type: BottomNavigationBarType.fixed,
-      currentIndex: (manSelected==false) ? 0 : 1 ,
+      currentIndex: (manSelected == false) ? 0 : 1,
       onTap: (indexIcon) {
         switch (indexIcon) {
           case 0:
