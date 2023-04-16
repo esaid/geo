@@ -165,7 +165,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Container(
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.purple, width: 2.0),
+          border: Border.all(color: Colors.purple, width: 4.0),
         ),
         child: Center(
           child: Column(
@@ -175,8 +175,8 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.all(15.0),
                 child: Container(
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5.0),
-                      border: Border.all(color: Colors.black54, width: 2.0)),
+                      borderRadius: BorderRadius.circular(15.0),
+                      border: Border.all(color: Colors.black45, width: 3.0)),
                   child: SizedBox(
                     width: 350,
                     height: 400,
