@@ -202,7 +202,7 @@ class _HomePageState extends State<HomePage> {
 
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
-      backgroundColor: Color(0xFF6200EE),
+      backgroundColor: const Color(0xFF6200EE),
       selectedItemColor: Colors.white,
       unselectedItemColor: Colors.white.withOpacity(.60),
       selectedFontSize: 14,
@@ -236,6 +236,7 @@ class _HomePageState extends State<HomePage> {
           icon: Icon(
             Icons.man,
             color: Colors.greenAccent,
+            size: 40.0,
           ),
         ),
         BottomNavigationBarItem(
@@ -243,6 +244,7 @@ class _HomePageState extends State<HomePage> {
           icon: Icon(
             Icons.man_3_sharp,
             color: Colors.redAccent,
+            size: 40.0,
           ),
         ),
         BottomNavigationBarItem(
@@ -250,6 +252,7 @@ class _HomePageState extends State<HomePage> {
           icon: Icon(
             Icons.add,
             color: Colors.greenAccent,
+            size: 40.0,
           ),
         ),
         BottomNavigationBarItem(
@@ -257,6 +260,7 @@ class _HomePageState extends State<HomePage> {
           icon: Icon(
             Icons.update,
             color: Colors.greenAccent,
+            size: 40.0,
           ),
         ),
       ],
