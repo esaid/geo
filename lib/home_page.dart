@@ -203,6 +203,8 @@ class _HomePageState extends State<HomePage> {
     return BottomNavigationBar(
 
       backgroundColor: Colors.deepPurple,
+      selectedFontSize: 18.0,
+      unselectedFontSize: 16.0,
       fixedColor: Colors.white,
       unselectedItemColor: Colors.black,
       type: BottomNavigationBarType.fixed,
