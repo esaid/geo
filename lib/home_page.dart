@@ -19,7 +19,8 @@ void log_terminal() {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool manSelected = false;  // false  position vers detabase, true deatbase vers position
+  bool manSelected =
+      false; // false  position vers detabase, true deatbase vers position
   bool selected = false;
   double currentZoom = 13.0;
   MapController mapController = MapController();
@@ -192,60 +193,74 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
         ),
-        floatingActionButton: Container(
-          child: Stack(
-            children: <Widget>[
-              Align(
-                alignment: Alignment.centerLeft,
-                child: FloatingActionButton(
-                  backgroundColor: Colors.redAccent,
-                  onPressed: _findMan,
-                  tooltip: 'Ou es tu',
-                  child: const Icon(
-                    Icons.man_3_sharp,
-                    color: Colors.amber,
-                  ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: FloatingActionButton(
-                  backgroundColor: Colors.green,
-                  onPressed: _getCurrentLocation,
-                  tooltip: 'Move  Man',
-                  child: const Icon(
-                    Icons.man,
-                    color: Colors.amber,
-                  ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.bottomLeft,
-                child: FloatingActionButton(
-                  backgroundColor: Colors.green,
-                  onPressed: _zoom,
-                  tooltip: 'Zoom In',
-                  child: const Icon(
-                    Icons.add,
-                    color: Colors.amber,
-                  ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: FloatingActionButton(
-                  backgroundColor: Colors.green,
-                  onPressed: _zoom_init,
-                  tooltip: 'Zoom Update',
-                  child: const Icon(
-                    Icons.update,
-                    color: Colors.amber,
-                  ),
-                ),
-              ),
-            ],
+        bottomNavigationBar: NavigationBar(),
+
+    );
+  }
+
+  Widget NavigationBar() {
+
+    return BottomNavigationBar(
+      type: BottomNavigationBarType.fixed,
+      backgroundColor: Color(0xFF6200EE),
+      selectedItemColor: Colors.white,
+      unselectedItemColor: Colors.white.withOpacity(.60),
+      selectedFontSize: 14,
+      unselectedFontSize: 14,
+      onTap: (value) {
+        switch (value) {
+          case 0:
+            print('getCuurentLocation');
+            _getCurrentLocation();
+            break;
+          case 1:
+            print('findMan');
+            _findMan();
+            break;
+          case 2:
+            print('zoom');
+            _zoom();
+            break;
+          case 3:
+            print('zoom_init');
+            _zoom_init();
+            break;
+          default:
+            _zoom();
+        }
+        print(value);
+      },
+      items: const [
+        BottomNavigationBarItem(
+          label: 'Ou je suis',
+          icon: Icon(
+            Icons.man,
+            color: Colors.greenAccent,
           ),
-        ));
+        ),
+        BottomNavigationBarItem(
+          label: 'Ou es tu',
+          icon: Icon(
+            Icons.man_3_sharp,
+            color: Colors.redAccent,
+          ),
+        ),
+        BottomNavigationBarItem(
+          label: 'Zoom In',
+          icon: Icon(
+            Icons.add,
+            color: Colors.greenAccent,
+          ),
+        ),
+        BottomNavigationBarItem(
+          label: 'Zoom Init',
+          icon: Icon(
+            Icons.update,
+            color: Colors.greenAccent,
+          ),
+        ),
+      ],
+    );
   }
 
   Widget _location() {
