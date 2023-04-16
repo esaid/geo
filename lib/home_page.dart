@@ -236,7 +236,7 @@ class _HomePageState extends State<HomePage> {
       },
       items: const [
         BottomNavigationBarItem(
-          label: 'Ou je suis',
+          label: 'Ou je suis ?',
           icon: Icon(
             Icons.man,
             color: Colors.greenAccent,
@@ -244,7 +244,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         BottomNavigationBarItem(
-          label: 'Ou es tu',
+          label: 'Ou es tu ?',
           icon: Icon(
             Icons.man_3_sharp,
             color: Colors.redAccent,
