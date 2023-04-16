@@ -27,11 +27,11 @@ class _HomePageState extends State<HomePage> {
   MapController mapController = MapController();
   latLng.LatLng currentCenter = latLng.LatLng(0.0, 0.0);
   Position? position;
-  final double zoomIn_step = 0.20;
-  double pos_latitutde = 0.0;
-  double set_pos_latitude = 0.0;
-  double pos_longitude = 0.0;
-  double set_pos_longitude = 0.0;
+  final double zoomInstep = 0.20;
+  double posLatitude = 0.0;
+  double setPosLatitude = 0.0;
+  double posLongitude = 0.0;
+  double setPosLongitude = 0.0;
 
   update_map_position() {
     // print("Update position map");
@@ -45,12 +45,12 @@ class _HomePageState extends State<HomePage> {
 
 // le cinquième chiffre après la virgule fournit une précision de l'ordre de un mètre : 1,08 m exactement
   get_latitude() {
-    return pos_latitutde; // plus precis 37.421998333333335
+    return posLatitude; // plus precis 37.421998333333335
   }
 
   // le cinquième chiffre après la virgule fournit une précision de l'ordre de un mètre : 1,08 m exactement
   get_longitude() {
-    return pos_longitude; // plus precis -122.084
+    return posLongitude; // plus precis -122.084
   }
 
 // gestion database https://deta.space/collections
@@ -76,8 +76,8 @@ class _HomePageState extends State<HomePage> {
     } else {
       final pos =
           await detabase.get(keyDetabase); // get datas  by Key = keyDetabase
-      set_pos_latitude = pos['position']['Lat'];
-      set_pos_longitude = pos['position']['long'];
+      setPosLatitude = pos['position']['Lat'];
+      setPosLongitude = pos['position']['long'];
       // print(all);
       // print(pos['position']);  //  {Lat: 37.421998333333335, long: -122.084}
       // print(pos['position']['Lat']); // 37.421998333333335
@@ -100,7 +100,7 @@ class _HomePageState extends State<HomePage> {
 
   void _getCurrentLocation() async {
     // position GPS
-    Future<Position> _determinePosition() async {
+    Future<Position> determinePosition() async {
       LocationPermission permission;
       permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
@@ -113,19 +113,19 @@ class _HomePageState extends State<HomePage> {
           desiredAccuracy: LocationAccuracy.high);
     }
 
-    Position position = await _determinePosition();
+    Position position = await determinePosition();
     setState(() {
       selected = !selected; // to change Colors black , blue
       if (manSelected == false) {
-        pos_latitutde = position.latitude;
-        pos_longitude = position.longitude;
+        posLatitude = position.latitude;
+        posLongitude = position.longitude;
       } else {
-        pos_latitutde = set_pos_latitude;
-        pos_longitude = set_pos_longitude;
+        posLatitude = setPosLatitude;
+        posLongitude = setPosLongitude;
       }
       update_map_position();
       _zoom();
-      Map<dynamic, double> p = {'Lat': pos_latitutde, 'long': pos_longitude};
+      Map<dynamic, double> p = {'Lat': posLatitude, 'long': posLongitude};
       detaBase(p, 'john'); // use only update detabase
 
       print('Position   ${get_position()}');
@@ -134,14 +134,14 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void _SelectMan(bool selectMan) {
+  void _selectMan(bool selectMan) {
     manSelected = selectMan;
     //set_pos_latitude = 37.5;
     //set_pos_longitude = -122.0;
     print('Suivre ou es tu $manSelected');
   }
 
-  void _zoom_init() {
+  void _zoomInit() {
     currentZoom = 13.0;
     mapController.move(currentCenter, currentZoom);
   }
@@ -150,7 +150,7 @@ class _HomePageState extends State<HomePage> {
     print('current  Zoom :  $currentZoom');
     (currentZoom >= 18)
         ? currentZoom = 18
-        : currentZoom = currentZoom + zoomIn_step;
+        : currentZoom = currentZoom + zoomInstep;
 
     mapController.move(currentCenter, currentZoom);
   }
@@ -159,7 +159,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Ou es - tu ?",
           style: TextStyle(fontSize: 25.0),
         ),
@@ -195,11 +195,11 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      bottomNavigationBar: NavigationBar(),
+      bottomNavigationBar: navigationBar(),
     );
   }
 
-  Widget NavigationBar() {
+  Widget navigationBar() {
     return BottomNavigationBar(
       backgroundColor: Colors.deepPurple,
       selectedFontSize: 18.0,
@@ -211,13 +211,13 @@ class _HomePageState extends State<HomePage> {
       onTap: (indexIcon) {
         switch (indexIcon) {
           case 0:
-            _SelectMan(false);
+            _selectMan(false);
             print('getCurrentLocation');
             _getCurrentLocation();
             break;
           case 1:
             print('findMan');
-            _SelectMan(true);
+            _selectMan(true);
             break;
           case 2:
             print('zoom');
@@ -225,7 +225,7 @@ class _HomePageState extends State<HomePage> {
             break;
           case 3:
             print('zoom_init');
-            _zoom_init();
+            _zoomInit();
             break;
           default:
             _zoom();
@@ -272,10 +272,10 @@ class _HomePageState extends State<HomePage> {
 
   Widget _location() {
     return Container(
-        padding: EdgeInsets.all(5.0),
+        padding: const EdgeInsets.all(5.0),
         alignment: Alignment.topLeft,
         child: Text(
-          'Location: Lat: $pos_latitutde Long: $pos_longitude',
+          'Location: Lat: $posLatitude Long: $posLongitude',
           style: TextStyle(
             color: selected ? Colors.black54 : Colors.blue,
           ),
@@ -306,12 +306,11 @@ class _HomePageState extends State<HomePage> {
           child: MarkerLayer(markers: [
             Marker(
               point: latLng.LatLng(get_latitude(), get_longitude()),
-              builder: (context) => Container(
-                  child: Icon(
+              builder: (context) => Icon(
                 Icons.man,
                 color: manSelected ? Colors.redAccent : Colors.green,
                 size: 50.0,
-              )),
+              ),
             ),
           ]),
         )
