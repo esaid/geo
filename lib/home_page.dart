@@ -19,6 +19,7 @@ void log_terminal() {
 }
 
 class _HomePageState extends State<HomePage> {
+  int indexIconSelected = 0 ;
   bool manSelected =
       false; // false  position vers detabase, true deatbase vers position
   bool selected = false;
@@ -132,8 +133,8 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void _findMan() {
-    manSelected = !manSelected;
+  void _SelectMan(bool selectMan) {
+    manSelected = selectMan;
     //set_pos_latitude = 37.5;
     //set_pos_longitude = -122.0;
     print('Suivre ou es tu $manSelected');
@@ -156,66 +157,66 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Ou es - tu ?",
-            style: TextStyle(fontSize: 25.0),
-          ),
+      appBar: AppBar(
+        title: Text(
+          "Ou es - tu ?",
+          style: TextStyle(fontSize: 25.0),
         ),
-        body: Container(
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.purple, width: 2.0),
-          ),
-          child: Center(
-            child: Column(
-              children: [
-                _location(),
-                Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5.0),
-                        border: Border.all(color: Colors.black54, width: 2.0)),
-                    child: SizedBox(
-                      width: 350,
-                      height: 400,
-                      child: Stack(
-                        children: <Widget>[
-                          Container(
-                            child: _mapView(),
-                          ),
-                        ],
-                      ),
+      ),
+      body: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.purple, width: 2.0),
+        ),
+        child: Center(
+          child: Column(
+            children: [
+              _location(),
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5.0),
+                      border: Border.all(color: Colors.black54, width: 2.0)),
+                  child: SizedBox(
+                    width: 350,
+                    height: 400,
+                    child: Stack(
+                      children: <Widget>[
+                        Container(
+                          child: _mapView(),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
-        bottomNavigationBar: NavigationBar(),
-
+      ),
+      bottomNavigationBar: NavigationBar(),
     );
   }
 
   Widget NavigationBar() {
 
     return BottomNavigationBar(
+
+      backgroundColor: Colors.deepPurple,
+      fixedColor: Colors.white,
+      unselectedItemColor: Colors.black,
       type: BottomNavigationBarType.fixed,
-      backgroundColor: const Color(0xFF6200EE),
-      selectedItemColor: Colors.white,
-      unselectedItemColor: Colors.white.withOpacity(.60),
-      selectedFontSize: 14,
-      unselectedFontSize: 14,
-      onTap: (value) {
-        switch (value) {
+      currentIndex: (manSelected==false) ? 0 : 1 ,
+      onTap: (indexIcon) {
+        switch (indexIcon) {
           case 0:
-            print('getCuurentLocation');
+            _SelectMan(false);
+            print('getCurrentLocation');
             _getCurrentLocation();
             break;
           case 1:
             print('findMan');
-            _findMan();
+            _SelectMan(true);
             break;
           case 2:
             print('zoom');
@@ -228,7 +229,8 @@ class _HomePageState extends State<HomePage> {
           default:
             _zoom();
         }
-        print(value);
+        indexIconSelected = indexIcon;
+        print(indexIcon);
       },
       items: const [
         BottomNavigationBarItem(
@@ -306,7 +308,7 @@ class _HomePageState extends State<HomePage> {
               builder: (context) => Container(
                   child: Icon(
                 Icons.man,
-                color: manSelected ? Colors.redAccent : Colors.blueAccent,
+                color: manSelected ? Colors.redAccent : Colors.green,
                 size: 50.0,
               )),
             ),
